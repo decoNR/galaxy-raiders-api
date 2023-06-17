@@ -37,6 +37,10 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
 
   var asteroids: List<Asteroid> = emptyList()
     private set
+  
+  //////////////////////////////////
+  val explosions: List<Explosion> = emptyList()
+    private set
 
   val spaceObjects: List<SpaceObject>
     get() = listOf(this.ship) + this.missiles + this.asteroids

@@ -14,6 +14,8 @@ class SpaceFieldRouter : Router, Visualizer {
     val ship: SpaceShip,
     val asteroids: List<Asteroid>,
     val missiles: List<Missile>,
+    //////////////////////
+    val explosion: List<Explosion>,
   )
 
   var dto: SpaceFieldDTO? = null

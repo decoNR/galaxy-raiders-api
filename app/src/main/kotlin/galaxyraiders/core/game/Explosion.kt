@@ -7,6 +7,14 @@ class Explosion(
   initialPosition: Point2D,
   initialVelocity: Vector2D,
   radius: Double,
-  mass: Double
+  mass: Double,
+  var lifeDuration: Double = 3.0
 ) :
-  SpaceObject("Explosion", '*', initialPosition, initialVelocity, radius, mass)
+  SpaceObject("Explosion", '*', initialPosition, initialVelocity, radius, mass){
+  fun aging() {
+    this.lifeDuration -= 1
+  }
+  fun isAlive(): Boolean{
+    return this.lifeDuration > 0
+  }
+}

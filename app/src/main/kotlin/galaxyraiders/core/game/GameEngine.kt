@@ -84,14 +84,18 @@ class GameEngine(
     this.generateAsteroids()
   }
 
-/////////////////////////////////////
   fun handleCollisions() {
     this.field.spaceObjects.forEachPair {
         (first, second) ->
       if (first.impacts(second)) {
-        if ((first is Asteroid && second is Missile) || (first is Missile && second is Asteroid)){
-          // estranho pois a lista de explosion ta no outro arquivo
+        //////////////////////////
+        if ((first is Asteroid && second is Missile)){
+          generateExplosion(first)
         }
+        else if ((first is Missile && second is Asteroid)){
+          generateExplosion(second)
+        }
+        //////////////////////////
         else {
           first.collideWith(second, GameEngineConfig.coefficientRestitution)
         }
@@ -108,6 +112,9 @@ class GameEngine(
   fun trimSpaceObjects() {
     this.field.trimAsteroids()
     this.field.trimMissiles()
+    //////////////////////
+    this.field.trimExplosions()
+    //////////////////////
   }
 
   fun generateAsteroids() {
@@ -117,6 +124,12 @@ class GameEngine(
       this.field.generateAsteroid()
     }
   }
+
+  /////////////////////
+  fun generateExplosion(asteroid: Asteroid){
+    this.field.generateExplosion(asteroid)
+  }
+  ////////////////////
 
   fun renderSpaceField() {
     this.visualizer.renderSpaceField(this.field)

@@ -9,13 +9,13 @@ class Asteroid(
   radius: Double,
   mass: Double,
   ///////////////////
-  var isTriggered: Boolean = false
+  var isExploded: Boolean = false
   ///////////////////
 ) :
   SpaceObject("Asteroid", '.', initialPosition, initialVelocity, radius, mass){
     ///////////////////
-    fun isTriggered() {
-      this.isTriggered = true
+    fun isExploded() {
+      this.isExploded = true
     }
     ///////////////////
   }

@@ -74,8 +74,8 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
 
   ////////////////////////
   fun generateExplosion(asteroid: Asteroid, missile: Missile) {
-    asteroid.isTriggered()
-    missile.isTriggered()
+    asteroid.isExploded()
+    missile.isExploded()
     this.explosions += this.createExplosion()
   }
   ////////////////////////
@@ -86,7 +86,7 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
     }
     ///////////////////////
     this.missiles = this.missiles.filter {
-      it.isTriggered
+      it.isExploded
     }
     ///////////////////////
   }
@@ -97,7 +97,7 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
     }
     ///////////////////////
     this.asteroids = this.asteroids.filter {
-      it.isTriggered
+      it.isExploded
     }
     ///////////////////////
   }

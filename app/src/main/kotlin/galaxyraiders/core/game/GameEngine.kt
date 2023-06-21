@@ -90,10 +90,10 @@ class GameEngine(
       if (first.impacts(second)) {
         //////////////////////////
         if ((first is Asteroid && second is Missile)){
-          generateExplosion(first)
+          generateExplosion(first, first)
         }
         else if ((first is Missile && second is Asteroid)){
-          generateExplosion(second)
+          generateExplosion(second, first)
         }
         //////////////////////////
         else {
@@ -126,7 +126,7 @@ class GameEngine(
   }
 
   /////////////////////
-  fun generateExplosion(asteroid: Asteroid){
+  fun generateExplosion(asteroid: Asteroid, missile: Missile){
     this.field.generateExplosion(asteroid)
   }
   ////////////////////

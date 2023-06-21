@@ -7,6 +7,15 @@ class Asteroid(
   initialPosition: Point2D,
   initialVelocity: Vector2D,
   radius: Double,
-  mass: Double
+  mass: Double,
+  ///////////////////
+  var isTriggered: Boolean = false
+  ///////////////////
 ) :
-  SpaceObject("Asteroid", '.', initialPosition, initialVelocity, radius, mass)
+  SpaceObject("Asteroid", '.', initialPosition, initialVelocity, radius, mass){
+    ///////////////////
+    fun isTriggered() {
+      this.isTriggered = true
+    }
+    ///////////////////
+  }

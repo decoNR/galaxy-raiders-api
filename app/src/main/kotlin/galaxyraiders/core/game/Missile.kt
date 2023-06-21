@@ -7,6 +7,15 @@ class Missile(
   initialPosition: Point2D,
   initialVelocity: Vector2D,
   radius: Double,
-  mass: Double
+  mass: Double,
+  ///////////////////
+  var isTriggered: Boolean = false
+  ///////////////////
 ) :
-  SpaceObject("Missile", '^', initialPosition, initialVelocity, radius, mass)
+  SpaceObject("Missile", '^', initialPosition, initialVelocity, radius, mass){
+    ///////////////////
+    fun isTriggered() {
+      this.isTriggered = true
+    }
+    ///////////////////
+  }

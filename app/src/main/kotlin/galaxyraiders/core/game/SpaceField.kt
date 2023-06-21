@@ -73,13 +73,10 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
   }
 
   ////////////////////////
-  fun generateExplosion(asteroid: Asteroid) {
-    this.explosions += Explosion(
-      initialPosition = Point2D(asteroid.center.x, asteroid.center.y),
-      initialVelocity = standardExplosionVelocity(),
-      radius = asteroid.radius,
-      mass = asteroid.mass,
-    )
+  fun generateExplosion(asteroid: Asteroid, missile: Missile) {
+    asteroid.isTriggered()
+    missile.isTriggered()
+    this.explosions += this.createExplosion()
   }
   ////////////////////////
 
@@ -87,12 +84,22 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
     this.missiles = this.missiles.filter {
       it.inBoundaries(this.boundaryX, this.boundaryY)
     }
+    ///////////////////////
+    this.missiles = this.missiles.filter {
+      it.isTriggered
+    }
+    ///////////////////////
   }
 
   fun trimAsteroids() {
     this.asteroids = this.asteroids.filter {
       it.inBoundaries(this.boundaryX, this.boundaryY)
     }
+    ///////////////////////
+    this.asteroids = this.asteroids.filter {
+      it.isTriggered
+    }
+    ///////////////////////
   }
 
   //////////////////////
@@ -140,6 +147,17 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
       mass = SpaceFieldConfig.missileMass,
     )
   }
+
+  //////////////////////////////
+  private fun createExplosion() {
+    return Explosion(
+      initialPosition = Point2D(asteroid.center.x, asteroid.center.y),
+      initialVelocity = standardExplosionVelocity(),
+      radius = asteroid.radius,
+      mass = asteroid.mass,
+    )
+  }
+  //////////////////////////////
 
   private fun defineMissilePosition(missileRadius: Double): Point2D {
     return ship.center + Vector2D(dx = 0.0, dy = ship.radius + missileRadius + SpaceFieldConfig.missileDistanceFromShip)

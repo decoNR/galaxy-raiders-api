@@ -4,6 +4,13 @@ import galaxyraiders.Config
 import galaxyraiders.core.physics.Point2D
 import galaxyraiders.core.physics.Vector2D
 import galaxyraiders.ports.RandomGenerator
+///////////////////////////
+import com.beust.klaxon.JsonObject
+import com.beust.klaxon.Klaxon
+import java.io.File
+import java.time.LocalDateTime
+///////////////////////////
+
 
 object SpaceFieldConfig {
   private val config = Config(prefix = "GR__CORE__GAME__SPACE_FIELD__")
@@ -41,7 +48,14 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
   //////////////////////////////////
   var explosions: List<Explosion> = emptyList()
     private set
+  
+  var asteroidsDestroyed: Int = 0
+    set 
+  
+  var score: Double = 0.0
+    set
   //////////////////////////////////
+
 
   val spaceObjects: List<SpaceObject>
     get() = listOf(this.ship) + this.missiles + this.asteroids + this.explosions ///////
@@ -63,6 +77,31 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
     this.explosions.forEach { it.move() }
   }
   /////////////////////
+  
+  /////////////////////
+  fun saveScoreboard() {
+    val scoreboardFile = File("/app/src/main/kotlin/galaxyraiders/core/score/Scoreboard.json")
+
+    val scoreboardEntries = mutableListOf<MutableMap<String, Any?>>()
+
+    if (scoreboardFile.exists()) {
+        val existingEntries = Klaxon().parseArray<MutableMap<String, Any?>>(scoreboardFile.readText())
+        if (existingEntries != null) {
+            scoreboardEntries.addAll(existingEntries)
+        }
+    }
+
+    val scoreboardEntry = mutableMapOf<String, Any?>(
+        "start_time" to LocalDateTime.now().toString(),
+        "score" to this.score,
+        "destroyed_asteroids" to this.asteroidsDestroyed
+    )
+
+    scoreboardEntries.add(scoreboardEntry)
+
+    scoreboardFile.writeText(Klaxon().toJsonString(scoreboardEntries))
+}
+//////////////////////
 
   fun generateMissile() {
     this.missiles += this.createMissile()
@@ -74,8 +113,8 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
 
   ////////////////////////
   fun generateExplosion(asteroid: Asteroid, missile: Missile) {
-    asteroid.isExploded()
-    missile.isExploded()
+    asteroid.explode()
+    missile.explode()
     this.explosions += this.createExplosion()
   }
   ////////////////////////
@@ -86,7 +125,7 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
     }
     ///////////////////////
     this.missiles = this.missiles.filter {
-      it.isExploded
+      it.isAlive()
     }
     ///////////////////////
   }
@@ -97,7 +136,7 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
     }
     ///////////////////////
     this.asteroids = this.asteroids.filter {
-      it.isExploded
+      it.isAlive()
     }
     ///////////////////////
   }

@@ -14,8 +14,11 @@ class Asteroid(
 ) :
   SpaceObject("Asteroid", '.', initialPosition, initialVelocity, radius, mass){
     ///////////////////
-    fun isExploded() {
+    fun explode() {
       this.isExploded = true
+    }
+    fun isAlive() {
+      return !this.isExploded
     }
     ///////////////////
   }

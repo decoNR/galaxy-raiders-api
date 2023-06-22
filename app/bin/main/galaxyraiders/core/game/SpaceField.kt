@@ -115,7 +115,7 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
   fun generateExplosion(asteroid: Asteroid, missile: Missile) {
     asteroid.explode()
     missile.explode()
-    this.explosions += this.createExplosion(asteroid)
+    this.explosions += this.createExplosion()
   }
   ////////////////////////
 
@@ -188,7 +188,7 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
   }
 
   //////////////////////////////
-  private fun createExplosion(asteroid: Asteroid): Explosion {
+  private fun createExplosion(): Explosion {
     return Explosion(
       initialPosition = Point2D(asteroid.center.x, asteroid.center.y),
       initialVelocity = standardExplosionVelocity(),

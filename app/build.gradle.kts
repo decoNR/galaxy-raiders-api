@@ -67,6 +67,8 @@ dependencies {
   
   //////////////////////////////////////
   implementation("com.beust:klaxon:5.5")
+
+  implementation("com.google.code.gson:gson:2.8.9")
   //////////////////////////////////////
 }
 

@@ -93,11 +93,13 @@ class GameEngine(
           generateExplosion(first, second)
           this.field.asteroidsDestroyed+=1
           this.field.score += first.radius * first.mass
+          this.field.saveScoreboard()
         }
         else if ((first is Missile && second is Asteroid)){
           generateExplosion(second, first)
           this.field.asteroidsDestroyed+=1
           this.field.score+= second.radius * second.mass
+          this.field.saveScoreboard()
         }
         //////////////////////////
         else {

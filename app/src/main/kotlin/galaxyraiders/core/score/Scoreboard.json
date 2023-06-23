@@ -1,0 +1,32 @@
+[
+  {
+    "start_time": "2023-06-23T00:55:05.826078598",
+    "score": 29850.0,
+    "destroyed_asteroids": 1
+  },
+  {
+    "start_time": "2023-06-23T01:03:10.510633506",
+    "score": 22150.0,
+    "destroyed_asteroids": 20
+  },
+  {
+    "start_time": "2023-06-23T01:30:35.624977704",
+    "score": 13400.0,
+    "destroyed_asteroids": 11
+  },
+  {
+    "start_time": "2023-06-23T01:59:03.167404294",
+    "score": 6100.0,
+    "destroyed_asteroids": 6
+  },
+  {
+    "start_time": "2023-06-23T02:47:07.559620869",
+    "score": 24150.0,
+    "destroyed_asteroids": 23
+  },
+  {
+    "start_time": "2023-06-23T02:59:27.291692758",
+    "score": 28500.0,
+    "destroyed_asteroids": 25
+  }
+]

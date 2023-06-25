@@ -30,4 +30,18 @@ class AsteroidTest {
   fun `it shows the type Asteroid when converted to String `() {
     assertTrue(asteroid.toString().contains("Asteroid"))
   }
+
+  //////////////////////
+  @Test
+  fun `it is alive`() {
+      assertTrue(asteroid.isAlive())
+  }
+
+  @Test
+  fun `it is not alive`() {
+      asteroid.isExploded = true
+
+      assertFalse(explosion.isAlive())
+  }
+  //////////////////////
 }

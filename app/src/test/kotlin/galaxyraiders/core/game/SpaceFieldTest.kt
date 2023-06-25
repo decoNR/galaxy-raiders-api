@@ -246,7 +246,8 @@ class SpaceFieldTest {
     val missile = spaceField.missiles.last()
 
     assertAll(
-      "SpaceField creates a new missile with restrictions",
+      "SpaceField 
+      es a new missile with restrictions",
       { assertEquals(0.0, missile.velocity.dx, DELTA) },
       { assertEquals(1.0, missile.velocity.dy, DELTA) },
     )
@@ -259,6 +260,37 @@ class SpaceFieldTest {
 
     assertEquals(numAsteroids + 1, spaceField.asteroids.size)
   }
+
+  /////////////
+  @Test
+  fun `it can generate a new explosion`() {
+    val numExplosions = spaceField.explosions.size
+    spaceField.generateExplosion()
+
+    assertEquals(numExplosions + 1, spaceField.explosions.size)
+  }
+  /////////////
+  //////////////
+  @Test
+  fun `it generates an explosion with a fixed velocity`() {
+    spaceField.generateAsteroid()
+    spaceField.generateMissile()
+    
+    var asteroid = spaceField.asteroids.last()
+    var missile = spaceField.misseles.last()
+
+    spaceField.generateExplosion(asteroid,missile)
+
+    val explosion = spaceField.explosions.last()
+
+    assertAll(
+      "SpaceField 
+      es a new explosion with restrictions",
+      { assertEquals(0.0, explosion.velocity.dx, DELTA) },
+      { assertEquals(0.0, explosion.velocity.dy, DELTA) },
+    )
+  }
+  ////////////
 
   @ParameterizedTest(name = "({0})")
   @MethodSource("provideSpaceFieldWithCornerCaseGeneratorArguments")
@@ -346,6 +378,21 @@ class SpaceFieldTest {
     assertNotEquals(-1, spaceField.missiles.indexOf(missile))
   }
 
+  /////////////////////
+  @Test
+  fun `it can remove exploded misseles`() {
+    spaceField.generateMissile()
+
+    val missile = spaceField.missiles.last()
+
+    missile.explode()
+
+    spaceField.trimMissiles()
+
+    assertEquals(-1, spaceField.missiles.indexOf(missile))
+  }
+  /////////////////////
+
   @Test
   fun `it can remove asteroids outside its boundary`() {
     spaceField.generateAsteroid()
@@ -376,6 +423,89 @@ class SpaceFieldTest {
 
     assertNotEquals(-1, spaceField.asteroids.indexOf(asteroid))
   }
+
+  /////////////////////
+  @Test
+  fun `it can remove exploded asteroids`() {
+    spaceField.generateAsteroid()
+
+    val asteroid = spaceField.asteroids.last()
+
+    asteroid.explode()
+
+    spaceField.trimAsteroids()
+
+    assertEquals(-1, spaceField.asteroids.indexOf(asteroid))
+  }
+  /////////////////////
+
+  ///////////////////////////
+  @Test
+  fun `it can remove explosions outside its boundary`() {
+    spaceField.generateAsteroid()
+    spaceField.generateMissile()
+
+    val asteroid = spaceField.asteroids.last()
+    val missile = spaceField.misseles.last()
+
+    val distanceToBottomBorder = asteroid.center.y - spaceField.boundaryY.start
+    val repetitionsToGetOutSpaceField = Math.ceil(
+      distanceToBottomBorder / Math.abs(asteroid.velocity.dy)
+    ).toInt()
+
+    repeat(repetitionsToGetOutSpaceField) { asteroid.move() }
+
+    spaceField.generateExplosion(asteroid, missile)
+
+    val explosion = spaceField.explosions.last()
+
+    spaceField.trimExplosion()
+
+    assertEquals(-1, spaceField.explosions.indexOf(explosion))
+  }
+  /////////////////////
+
+  /////////////////////
+  @Test
+  fun `it does not remove explosion inside its boundary`() {
+    spaceField.generateAsteroid()
+    spaceField.generateMissile()
+
+    val asteroid = spaceField.asteroids.last()
+    val missile = spaceField.misseles.last()
+
+    asteroid.move()
+
+    spaceField.generateExplosion(asteroid, missile)
+
+    val explosion = spaceField.explosions.last()
+
+    spaceField.trimExplosions()
+
+    assertNotEquals(-1, spaceField.explosions.indexOf(explosion))
+  }
+  ////////////
+
+  /////////////////////
+  @Test
+  fun `it can remove old explosions`() {
+    spaceField.generateAsteroid()
+    spaceField.generateMissile()
+
+    val asteroid = spaceField.asteroids.last()
+    val missile = spaceField.misseles.last()
+    
+    spaceField.generateExplosion(asteroid,missile)
+
+    val explosion = spaceField.explosions.last()
+
+    explosion.lifeDuration = -1
+
+    spaceField.trimExplosions()
+
+    assertEquals(-1, spaceField.missiles.indexOf(missile))
+  }
+  /////////////////////
 
   private companion object {
     @JvmStatic

@@ -8,7 +8,7 @@ class Explosion(
   initialVelocity: Vector2D,
   radius: Double,
   mass: Double,
-  var lifeDuration: Double = 3.0
+  var lifeDuration: Int = 3
 ) :
   SpaceObject("Explosion", '*', initialPosition, initialVelocity, radius, mass){
   fun aging() {

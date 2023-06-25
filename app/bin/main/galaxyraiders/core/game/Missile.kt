@@ -8,17 +8,13 @@ class Missile(
   initialVelocity: Vector2D,
   radius: Double,
   mass: Double,
-  ///////////////////
   var isExploded: Boolean = false
-  ///////////////////
 ) :
   SpaceObject("Missile", '^', initialPosition, initialVelocity, radius, mass){
-    ///////////////////
     fun explode() {
       this.isExploded = true
     }
     fun isAlive(): Boolean {
       return !this.isExploded
     }
-    ///////////////////
   }

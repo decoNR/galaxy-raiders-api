@@ -31,7 +31,6 @@ class AsteroidTest {
     assertTrue(asteroid.toString().contains("Asteroid"))
   }
 
-  //////////////////////
   @Test
   fun `it is alive`() {
       assertTrue(asteroid.isAlive())
@@ -43,5 +42,4 @@ class AsteroidTest {
 
       assertTrue(!asteroid.isAlive())
   }
-  //////////////////////
 }

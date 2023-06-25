@@ -260,7 +260,6 @@ class SpaceFieldTest {
     assertEquals(numAsteroids + 1, spaceField.asteroids.size)
   }
 
-  /////////////
   @Test
   fun `it can generate a new explosion`() {
     val numExplosions = spaceField.explosions.size
@@ -274,8 +273,7 @@ class SpaceFieldTest {
 
     assertEquals(numExplosions + 1, spaceField.explosions.size)
   }
-  /////////////
-  //////////////
+
   @Test
   fun `it generates an explosion with a fixed velocity`() {
     spaceField.generateAsteroid()
@@ -294,7 +292,6 @@ class SpaceFieldTest {
       { assertEquals(0.0, explosion.velocity.dy, DELTA) },
     )
   }
-  ////////////
 
   @ParameterizedTest(name = "({0})")
   @MethodSource("provideSpaceFieldWithCornerCaseGeneratorArguments")
@@ -382,7 +379,6 @@ class SpaceFieldTest {
     assertNotEquals(-1, spaceField.missiles.indexOf(missile))
   }
 
-  /////////////////////
   @Test
   fun `it can remove exploded misseles`() {
     spaceField.generateMissile()
@@ -395,7 +391,6 @@ class SpaceFieldTest {
 
     assertEquals(-1, spaceField.missiles.indexOf(missile))
   }
-  /////////////////////
 
   @Test
   fun `it can remove asteroids outside its boundary`() {
@@ -428,7 +423,6 @@ class SpaceFieldTest {
     assertNotEquals(-1, spaceField.asteroids.indexOf(asteroid))
   }
 
-  /////////////////////
   @Test
   fun `it can remove exploded asteroids`() {
     spaceField.generateAsteroid()
@@ -441,9 +435,7 @@ class SpaceFieldTest {
 
     assertEquals(-1, spaceField.asteroids.indexOf(asteroid))
   }
-  /////////////////////
 
-  ///////////////////////////
   @Test
   fun `it can remove explosions outside its boundary`() {
     spaceField.generateAsteroid()
@@ -467,9 +459,7 @@ class SpaceFieldTest {
 
     assertEquals(-1, spaceField.explosions.indexOf(explosion))
   }
-  /////////////////////
 
-  /////////////////////
   @Test
   fun `it does not remove explosion inside its boundary`() {
     spaceField.generateAsteroid()
@@ -488,9 +478,7 @@ class SpaceFieldTest {
 
     assertNotEquals(-1, spaceField.explosions.indexOf(explosion))
   }
-  ////////////
 
-  /////////////////////
   @Test
   fun `it can remove old explosions`() {
     spaceField.generateAsteroid()
@@ -509,7 +497,6 @@ class SpaceFieldTest {
 
     assertEquals(-1, spaceField.explosions.indexOf(explosion))
   }
-  /////////////////////
 
   private companion object {
     @JvmStatic

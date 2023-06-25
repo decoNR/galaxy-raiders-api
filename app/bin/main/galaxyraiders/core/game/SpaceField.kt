@@ -4,12 +4,10 @@ import galaxyraiders.Config
 import galaxyraiders.core.physics.Point2D
 import galaxyraiders.core.physics.Vector2D
 import galaxyraiders.ports.RandomGenerator
-///////////////////////////
 import com.beust.klaxon.JsonObject
 import com.beust.klaxon.Klaxon
 import java.io.File
 import java.time.LocalDateTime
-///////////////////////////
 
 
 object SpaceFieldConfig {
@@ -45,7 +43,6 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
   var asteroids: List<Asteroid> = emptyList()
     private set
   
-  //////////////////////////////////
   var explosions: List<Explosion> = emptyList()
     private set
   
@@ -54,11 +51,10 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
   
   var score: Double = 0.0
     set
-  //////////////////////////////////
 
 
   val spaceObjects: List<SpaceObject>
-    get() = listOf(this.ship) + this.missiles + this.asteroids + this.explosions ///////
+    get() = listOf(this.ship) + this.missiles + this.asteroids + this.explosions
 
   fun moveShip() {
     this.ship.move(boundaryX, boundaryY)
@@ -72,13 +68,10 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
     this.asteroids.forEach { it.move() }
   }
 
-  /////////////////////
   fun moveExplosions() {
     this.explosions.forEach { it.move() }
   }
-  /////////////////////
   
-  /////////////////////
   fun saveScoreboard() {
     val scoreboardFile = File("/app/src/main/kotlin/galaxyraiders/core/score/Scoreboard.json")
 
@@ -101,7 +94,6 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
 
     scoreboardFile.writeText(Klaxon().toJsonString(scoreboardEntries))
 }
-//////////////////////
 
   fun generateMissile() {
     this.missiles += this.createMissile()
@@ -111,37 +103,30 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
     this.asteroids += this.createAsteroidWithRandomProperties()
   }
 
-  ////////////////////////
   fun generateExplosion(asteroid: Asteroid, missile: Missile) {
     asteroid.explode()
     missile.explode()
     this.explosions += this.createExplosion()
   }
-  ////////////////////////
 
   fun trimMissiles() {
     this.missiles = this.missiles.filter {
       it.inBoundaries(this.boundaryX, this.boundaryY)
     }
-    ///////////////////////
     this.missiles = this.missiles.filter {
       it.isAlive()
     }
-    ///////////////////////
   }
 
   fun trimAsteroids() {
     this.asteroids = this.asteroids.filter {
       it.inBoundaries(this.boundaryX, this.boundaryY)
     }
-    ///////////////////////
     this.asteroids = this.asteroids.filter {
       it.isAlive()
     }
-    ///////////////////////
   }
 
-  //////////////////////
   fun trimExplosions() {
     this.explosions = this.explosions.filter {
       it.inBoundaries(this.boundaryX, this.boundaryY)
@@ -153,7 +138,6 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
       it.isAlive()
     }
   }
-  //////////////////////
 
   private fun initializeShip(): SpaceShip {
     return SpaceShip(
@@ -172,11 +156,9 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
     return Vector2D(dx = 0.0, dy = 0.0)
   }
 
-  /////////////////////////////
   private fun standardExplosionVelocity(): Vector2D {
     return Vector2D(dx = 0.0, dy = 0.0)
   }
-  /////////////////////////////
 
   private fun createMissile(): Missile {
     return Missile(
@@ -187,7 +169,6 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
     )
   }
 
-  //////////////////////////////
   private fun createExplosion(): Explosion {
     return Explosion(
       initialPosition = Point2D(asteroid.center.x, asteroid.center.y),
@@ -196,7 +177,6 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
       mass = asteroid.mass,
     )
   }
-  //////////////////////////////
 
   private fun defineMissilePosition(missileRadius: Double): Point2D {
     return ship.center + Vector2D(dx = 0.0, dy = ship.radius + missileRadius + SpaceFieldConfig.missileDistanceFromShip)

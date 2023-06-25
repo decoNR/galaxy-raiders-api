@@ -31,7 +31,6 @@ class MissileTest {
     assertTrue(missile.toString().contains("Missile"))
   }
 
-  //////////////////////
   @Test
   fun `it is alive`() {
       assertTrue(missile.isAlive())
@@ -43,5 +42,4 @@ class MissileTest {
 
       assertTrue(!missile.isAlive())
   }
-  //////////////////////
 }

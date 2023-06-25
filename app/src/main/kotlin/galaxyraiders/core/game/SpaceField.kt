@@ -44,7 +44,6 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
   var asteroids: List<Asteroid> = emptyList()
     private set
   
-  //////////////////////////////////
   var explosions: List<Explosion> = emptyList()
     private set
   
@@ -56,7 +55,6 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
   
   var start_time: String = LocalDateTime.now().toString()
     set
-  //////////////////////////////////
 
 
   val spaceObjects: List<SpaceObject>
@@ -74,11 +72,9 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
     this.asteroids.forEach { it.move() }
   }
 
-  /////////////////////
   fun moveExplosions() {
     this.explosions.forEach { it.move() }
   }
-  /////////////////////
   
   ///////////////////// /app/src/main/kotlin/galaxyraiders/core/score/
   fun saveScoreboard() {
@@ -96,12 +92,9 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
     val existingEntry = scoreboardEntries.find { it["start_time"] == this.start_time }
 
     if (existingEntry != null) {
-        // Uma partida com o mesmo start_time já existe
-        // Atualize a pontuação da partida existente
         existingEntry["score"] = this.score
         existingEntry["destroyed_asteroids"] = this.asteroidsDestroyed
     } else {
-        // Nenhuma partida com o mesmo start_time foi encontrada, adicione uma nova entrada
         val newEntry = mutableMapOf<String, Any?>(
             "start_time" to this.start_time,
             "score" to this.score,
@@ -116,7 +109,6 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
 
     scoreboardFile.writeText(json)
     this.createLeaderboard()
-    //scoreboardFile.writeText(Klaxon().toJsonString(scoreboardEntries, prettyPrint = true))
   }
 
   fun createLeaderboard(){
@@ -141,7 +133,6 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
     leaderboardFile.writeText(leaderboardJson)
   }
 
-//////////////////////
 
   fun generateMissile() {
     this.missiles += this.createMissile()
@@ -151,37 +142,30 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
     this.asteroids += this.createAsteroidWithRandomProperties()
   }
 
-  ////////////////////////
   fun generateExplosion(asteroid: Asteroid, missile: Missile) {
     asteroid.explode()
     missile.explode()
     this.explosions += this.createExplosion(asteroid)
   }
-  ////////////////////////
 
   fun trimMissiles() {
     this.missiles = this.missiles.filter {
       it.inBoundaries(this.boundaryX, this.boundaryY)
     }
-    ///////////////////////
     this.missiles = this.missiles.filter {
       it.isAlive()
     }
-    ///////////////////////
   }
 
   fun trimAsteroids() {
     this.asteroids = this.asteroids.filter {
       it.inBoundaries(this.boundaryX, this.boundaryY)
     }
-    ///////////////////////
     this.asteroids = this.asteroids.filter {
       it.isAlive()
     }
-    ///////////////////////
   }
 
-  //////////////////////
   fun trimExplosions() {
     this.explosions = this.explosions.filter {
       it.inBoundaries(this.boundaryX, this.boundaryY)
@@ -193,7 +177,6 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
       it.isAlive()
     }
   }
-  //////////////////////
 
   private fun initializeShip(): SpaceShip {
     return SpaceShip(
@@ -212,11 +195,9 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
     return Vector2D(dx = 0.0, dy = 0.0)
   }
 
-  /////////////////////////////
   private fun standardExplosionVelocity(): Vector2D {
     return Vector2D(dx = 0.0, dy = 0.0)
   }
-  /////////////////////////////
 
   private fun createMissile(): Missile {
     return Missile(
@@ -227,7 +208,6 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
     )
   }
 
-  //////////////////////////////
   private fun createExplosion(asteroid: Asteroid): Explosion {
     return Explosion(
       initialPosition = Point2D(asteroid.center.x, asteroid.center.y),
@@ -236,7 +216,6 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
       mass = asteroid.mass,
     )
   }
-  //////////////////////////////
 
   private fun defineMissilePosition(missileRadius: Double): Point2D {
     return ship.center + Vector2D(dx = 0.0, dy = ship.radius + missileRadius + SpaceFieldConfig.missileDistanceFromShip)

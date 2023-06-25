@@ -41,7 +41,7 @@ class AsteroidTest {
   fun `it is not alive`() {
       asteroid.isExploded = true
 
-      assertFalse(explosion.isAlive())
+      assertTrue(!asteroid.isAlive())
   }
   //////////////////////
 }

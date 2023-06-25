@@ -246,8 +246,7 @@ class SpaceFieldTest {
     val missile = spaceField.missiles.last()
 
     assertAll(
-      "SpaceField 
-      es a new missile with restrictions",
+      "SpaceField creates a new missile with restrictions",
       { assertEquals(0.0, missile.velocity.dx, DELTA) },
       { assertEquals(1.0, missile.velocity.dy, DELTA) },
     )
@@ -265,7 +264,13 @@ class SpaceFieldTest {
   @Test
   fun `it can generate a new explosion`() {
     val numExplosions = spaceField.explosions.size
-    spaceField.generateExplosion()
+    spaceField.generateAsteroid()
+    spaceField.generateMissile()
+
+    var asteroid = spaceField.asteroids.last()
+    var missile = spaceField.missiles.last()
+
+    spaceField.generateExplosion(asteroid, missile)
 
     assertEquals(numExplosions + 1, spaceField.explosions.size)
   }
@@ -277,15 +282,14 @@ class SpaceFieldTest {
     spaceField.generateMissile()
     
     var asteroid = spaceField.asteroids.last()
-    var missile = spaceField.misseles.last()
+    var missile = spaceField.missiles.last()
 
     spaceField.generateExplosion(asteroid,missile)
 
     val explosion = spaceField.explosions.last()
 
     assertAll(
-      "SpaceField 
-      es a new explosion with restrictions",
+      "SpaceField creates a new explosion with restrictions",
       { assertEquals(0.0, explosion.velocity.dx, DELTA) },
       { assertEquals(0.0, explosion.velocity.dy, DELTA) },
     )
@@ -446,7 +450,7 @@ class SpaceFieldTest {
     spaceField.generateMissile()
 
     val asteroid = spaceField.asteroids.last()
-    val missile = spaceField.misseles.last()
+    val missile = spaceField.missiles.last()
 
     val distanceToBottomBorder = asteroid.center.y - spaceField.boundaryY.start
     val repetitionsToGetOutSpaceField = Math.ceil(
@@ -459,7 +463,7 @@ class SpaceFieldTest {
 
     val explosion = spaceField.explosions.last()
 
-    spaceField.trimExplosion()
+    spaceField.trimExplosions()
 
     assertEquals(-1, spaceField.explosions.indexOf(explosion))
   }
@@ -472,7 +476,7 @@ class SpaceFieldTest {
     spaceField.generateMissile()
 
     val asteroid = spaceField.asteroids.last()
-    val missile = spaceField.misseles.last()
+    val missile = spaceField.missiles.last()
 
     asteroid.move()
 
@@ -493,7 +497,7 @@ class SpaceFieldTest {
     spaceField.generateMissile()
 
     val asteroid = spaceField.asteroids.last()
-    val missile = spaceField.misseles.last()
+    val missile = spaceField.missiles.last()
     
     spaceField.generateExplosion(asteroid,missile)
 
@@ -503,7 +507,7 @@ class SpaceFieldTest {
 
     spaceField.trimExplosions()
 
-    assertEquals(-1, spaceField.missiles.indexOf(missile))
+    assertEquals(-1, spaceField.explosions.indexOf(explosion))
   }
   /////////////////////
 

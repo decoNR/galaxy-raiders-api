@@ -39,9 +39,9 @@ class MissileTest {
 
   @Test
   fun `it is not alive`() {
-      asteroid.isExploded = true
+      missile.isExploded = true
 
-      assertFalse(missile.isAlive())
+      assertTrue(!missile.isAlive())
   }
   //////////////////////
 }

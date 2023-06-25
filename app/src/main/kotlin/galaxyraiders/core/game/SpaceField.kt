@@ -1,18 +1,15 @@
 package galaxyraiders.core.game
 
-import galaxyraiders.Config
-import galaxyraiders.core.physics.Point2D
-import galaxyraiders.core.physics.Vector2D
-import galaxyraiders.ports.RandomGenerator
-///////////////////////////
 import com.beust.klaxon.JsonObject
 import com.beust.klaxon.Klaxon
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import galaxyraiders.Config
+import galaxyraiders.core.physics.Point2D
+import galaxyraiders.core.physics.Vector2D
+import galaxyraiders.ports.RandomGenerator
 import java.io.File
 import java.time.LocalDateTime
-///////////////////////////
-
 
 object SpaceFieldConfig {
   private val config = Config(prefix = "GR__CORE__GAME__SPACE_FIELD__")

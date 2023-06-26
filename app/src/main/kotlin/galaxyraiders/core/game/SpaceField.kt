@@ -9,6 +9,8 @@ import galaxyraiders.ports.RandomGenerator
 import java.io.File
 import java.time.LocalDateTime
 
+private const val BEST_ENTRIES = 3
+
 object SpaceFieldConfig {
   private val config = Config(prefix = "GR__CORE__GAME__SPACE_FIELD__")
 
@@ -48,13 +50,13 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
   var asteroidsDestroyed: Int = 0
     set
 
+  var bestEntries: Int = BEST_ENTRIES
+    set
+
   var score: Double = 0.0
     set
 
   var startTime: String = LocalDateTime.now().toString()
-    set
-
-  var bestEntries: Int = 3
     set
 
   val spaceObjects: List<SpaceObject>
@@ -125,7 +127,7 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
     }
 
     val sortedEntries = scoreboardEntries.sortedByDescending { it["score"] as? Double }
-    val leaderboardEntries = sortedEntries.take(bestEntries)
+    val leaderboardEntries = sortedEntries.take(this.bestEntries)
 
     val gson = GsonBuilder().setPrettyPrinting().create()
     val leaderboardJson = gson.toJson(leaderboardEntries)

@@ -10,7 +10,6 @@ import kotlin.test.assertTrue
 @DisplayName("Given an explosion")
 class ExplosionTest {
 
-  private val DELTA = 1e-10
   private val explosion = Explosion(
     initialPosition = Point2D(1.0, 1.0),
     initialVelocity = Vector2D(1.0, 0.0),

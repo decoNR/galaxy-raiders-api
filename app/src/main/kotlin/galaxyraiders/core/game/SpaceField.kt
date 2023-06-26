@@ -51,7 +51,10 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
   var score: Double = 0.0
     set
 
-  var start_time: String = LocalDateTime.now().toString()
+  var startTime: String = LocalDateTime.now().toString()
+    set
+
+  const val bestEntries: Int = 3
     set
 
   val spaceObjects: List<SpaceObject>
@@ -122,7 +125,7 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
     }
 
     val sortedEntries = scoreboardEntries.sortedByDescending { it["score"] as? Double }
-    val leaderboardEntries = sortedEntries.take(3)
+    val leaderboardEntries = sortedEntries.take(bestEntries)
 
     val gson = GsonBuilder().setPrettyPrinting().create()
     val leaderboardJson = gson.toJson(leaderboardEntries)

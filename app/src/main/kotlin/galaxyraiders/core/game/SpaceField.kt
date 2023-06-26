@@ -54,7 +54,7 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
   var startTime: String = LocalDateTime.now().toString()
     set
 
-  const val bestEntries: Int = 3
+  var bestEntries: Int = 3
     set
 
   val spaceObjects: List<SpaceObject>
@@ -89,14 +89,14 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
       }
     }
 
-    val existingEntry = scoreboardEntries.find { it["start_time"] == this.start_time }
+    val existingEntry = scoreboardEntries.find { it["startTime"] == this.startTime }
 
     if (existingEntry != null) {
       existingEntry["score"] = this.score
       existingEntry["destroyed_asteroids"] = this.asteroidsDestroyed
     } else {
       val newEntry = mutableMapOf<String, Any?>(
-        "start_time" to this.start_time,
+        "startTime" to this.startTime,
         "score" to this.score,
         "destroyed_asteroids" to this.asteroidsDestroyed
       )

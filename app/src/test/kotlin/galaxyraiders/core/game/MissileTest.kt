@@ -33,13 +33,13 @@ class MissileTest {
 
   @Test
   fun `it is alive`() {
-      assertTrue(missile.isAlive())
+    assertTrue(missile.isAlive())
   }
 
   @Test
   fun `it is not alive`() {
-      missile.isExploded = true
+    missile.isExploded = true
 
-      assertTrue(!missile.isAlive())
+    assertTrue(!missile.isAlive())
   }
 }

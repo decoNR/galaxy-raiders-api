@@ -42,13 +42,13 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
 
   var asteroids: List<Asteroid> = emptyList()
     private set
-  
+
   var explosions: List<Explosion> = emptyList()
     private set
-  
+
   var asteroidsDestroyed: Int = 0
-    set 
-  
+    set
+
   var score: Double = 0.0
     set
 
@@ -71,7 +71,7 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
   fun moveExplosions() {
     this.explosions.forEach { it.move() }
   }
-  
+
   fun saveScoreboard() {
     val scoreboardFile = File("/app/src/main/kotlin/galaxyraiders/core/score/Scoreboard.json")
 

@@ -1,8 +1,6 @@
 package galaxyraiders.core.game
 
-import com.beust.klaxon.JsonObject
 import com.beust.klaxon.Klaxon
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import galaxyraiders.Config
 import galaxyraiders.core.physics.Point2D
@@ -43,22 +41,21 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
 
   var asteroids: List<Asteroid> = emptyList()
     private set
-  
+
   var explosions: List<Explosion> = emptyList()
     private set
-  
+
   var asteroidsDestroyed: Int = 0
-    set 
-  
+    set
+
   var score: Double = 0.0
     set
-  
+
   var start_time: String = LocalDateTime.now().toString()
     set
 
-
   val spaceObjects: List<SpaceObject>
-    get() = listOf(this.ship) + this.missiles + this.asteroids + this.explosions ///////
+    get() = listOf(this.ship) + this.missiles + this.asteroids + this.explosions // /////
 
   fun moveShip() {
     this.ship.move(boundaryX, boundaryY)
@@ -75,33 +72,33 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
   fun moveExplosions() {
     this.explosions.forEach { it.move() }
   }
-  
-  ///////////////////// /app/src/main/kotlin/galaxyraiders/core/score/
+
+  // /////////////////// /app/src/main/kotlin/galaxyraiders/core/score/
   fun saveScoreboard() {
     val scoreboardFile = File("src/main/kotlin/galaxyraiders/core/score/Scoreboard.json")
 
     val scoreboardEntries = mutableListOf<MutableMap<String, Any?>>()
 
     if (scoreboardFile.exists()) {
-        val existingEntries = Klaxon().parseArray<MutableMap<String, Any?>>(scoreboardFile.readText())
-        if (existingEntries != null) {
-            scoreboardEntries.addAll(existingEntries)
-        }
+      val existingEntries = Klaxon().parseArray<MutableMap<String, Any?>>(scoreboardFile.readText())
+      if (existingEntries != null) {
+        scoreboardEntries.addAll(existingEntries)
+      }
     }
 
     val existingEntry = scoreboardEntries.find { it["start_time"] == this.start_time }
 
     if (existingEntry != null) {
-        existingEntry["score"] = this.score
-        existingEntry["destroyed_asteroids"] = this.asteroidsDestroyed
+      existingEntry["score"] = this.score
+      existingEntry["destroyed_asteroids"] = this.asteroidsDestroyed
     } else {
-        val newEntry = mutableMapOf<String, Any?>(
-            "start_time" to this.start_time,
-            "score" to this.score,
-            "destroyed_asteroids" to this.asteroidsDestroyed
-        )
+      val newEntry = mutableMapOf<String, Any?>(
+        "start_time" to this.start_time,
+        "score" to this.score,
+        "destroyed_asteroids" to this.asteroidsDestroyed
+      )
 
-        scoreboardEntries.add(newEntry)
+      scoreboardEntries.add(newEntry)
     }
 
     val gson = GsonBuilder().setPrettyPrinting().create()
@@ -111,7 +108,7 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
     this.createLeaderboard()
   }
 
-  fun createLeaderboard(){
+  fun createLeaderboard() {
     val leaderboardFile = File("src/main/kotlin/galaxyraiders/core/score/Leaderboard.json")
     val scoreboardFile = File("src/main/kotlin/galaxyraiders/core/score/Scoreboard.json")
 
@@ -120,7 +117,7 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
     if (scoreboardFile.exists()) {
       val scoreboardExistingEntries = Klaxon().parseArray<MutableMap<String, Any?>>(scoreboardFile.readText())
       if (scoreboardExistingEntries != null) {
-          scoreboardEntries.addAll(scoreboardExistingEntries)
+        scoreboardEntries.addAll(scoreboardExistingEntries)
       }
     }
 
@@ -132,7 +129,6 @@ data class SpaceField(val width: Int, val height: Int, val generator: RandomGene
 
     leaderboardFile.writeText(leaderboardJson)
   }
-
 
   fun generateMissile() {
     this.missiles += this.createMissile()

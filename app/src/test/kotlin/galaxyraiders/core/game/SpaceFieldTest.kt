@@ -278,11 +278,11 @@ class SpaceFieldTest {
   fun `it generates an explosion with a fixed velocity`() {
     spaceField.generateAsteroid()
     spaceField.generateMissile()
-    
+
     var asteroid = spaceField.asteroids.last()
     var missile = spaceField.missiles.last()
 
-    spaceField.generateExplosion(asteroid,missile)
+    spaceField.generateExplosion(asteroid, missile)
 
     val explosion = spaceField.explosions.last()
 
@@ -486,8 +486,8 @@ class SpaceFieldTest {
 
     val asteroid = spaceField.asteroids.last()
     val missile = spaceField.missiles.last()
-    
-    spaceField.generateExplosion(asteroid,missile)
+
+    spaceField.generateExplosion(asteroid, missile)
 
     val explosion = spaceField.explosions.last()
 

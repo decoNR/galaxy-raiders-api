@@ -10,11 +10,11 @@ class Asteroid(
   mass: Double,
   var isExploded: Boolean = false
 ) :
-  SpaceObject("Asteroid", '.', initialPosition, initialVelocity, radius, mass){
-    fun explode() {
-      this.isExploded = true
-    }
-    fun isAlive(): Boolean {
-      return !this.isExploded
-    }
+  SpaceObject("Asteroid", '.', initialPosition, initialVelocity, radius, mass) {
+  fun explode() {
+    this.isExploded = true
   }
+  fun isAlive(): Boolean {
+    return !this.isExploded
+  }
+}

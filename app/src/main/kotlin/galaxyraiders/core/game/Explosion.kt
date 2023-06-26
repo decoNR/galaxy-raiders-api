@@ -10,11 +10,11 @@ class Explosion(
   mass: Double,
   var lifeDuration: Int = 3
 ) :
-  SpaceObject("Explosion", '*', initialPosition, initialVelocity, radius, mass){
+  SpaceObject("Explosion", '*', initialPosition, initialVelocity, radius, mass) {
   fun aging() {
     this.lifeDuration -= 1
   }
-  fun isAlive(): Boolean{
+  fun isAlive(): Boolean {
     return this.lifeDuration > 0
   }
 }

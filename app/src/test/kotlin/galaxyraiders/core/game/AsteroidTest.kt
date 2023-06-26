@@ -33,13 +33,13 @@ class AsteroidTest {
 
   @Test
   fun `it is alive`() {
-      assertTrue(asteroid.isAlive())
+    assertTrue(asteroid.isAlive())
   }
 
   @Test
   fun `it is not alive`() {
-      asteroid.isExploded = true
+    asteroid.isExploded = true
 
-      assertTrue(!asteroid.isAlive())
+    assertTrue(!asteroid.isAlive())
   }
 }
